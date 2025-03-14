@@ -5,8 +5,7 @@ import { Link } from 'expo-router'
 const index = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',gap: 100 }}>
-      <Link href={"/notification"}>Visit Notification Screen</Link>
-      <Link href={"/profile"}>Visit Profile Screen</Link>
+      <Text>Home</Text>
     </View>
   )
 }
