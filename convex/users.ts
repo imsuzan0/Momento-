@@ -10,10 +10,16 @@ export const createUser=mutation({
         email:v.string(),
         clerkId:v.string(),
     },
+        /**
+         * Creates a new user in the convex db with the given info
+         * If a user with the given clerkId already exists, does nothing
+         * @param ctx - Convex context
+         * @param args - User info to create a new user
+         */
     handler:async (ctx,args)=>{
 
         const existingUser=await ctx.db.query("users")
-        .withIndex("by_clerk_id",(Query)=>Query.eq("clerkId",args.clerkId))
+        .withIndex("by_clerk_id",(q)=>q.eq("clerkId",args.clerkId))
         .first()
 
         if(existingUser) return 
