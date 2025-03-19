@@ -1,5 +1,5 @@
 import { v } from "convex/values"
-import {mutation} from "./_generated/server"
+import {mutation, MutationCtx, QueryCtx} from "./_generated/server"
 
 export const createUser=mutation({
     args:{
@@ -38,3 +38,22 @@ export const createUser=mutation({
         })
     }
 })
+
+export async function getAunthenticatedUser(ctx:QueryCtx | MutationCtx){
+      // Get the logged-in user's identity
+      const identity = await ctx.auth.getUserIdentity();
+
+      // If user is not logged in, throw an error
+      if (!identity) throw new Error("Unauthorized");
+  
+      // Find the current user in the "users" table by matching their Clerk ID
+      const currentUser = await ctx.db
+        .query("users")
+        .withIndex("by_clerk_id", (q) => q.eq("clerkId", identity.subject))
+        .first();
+  
+      // If user is not found in the database, throw an error
+      if (!currentUser) throw new Error("User not found");
+
+    return currentUser
+}
