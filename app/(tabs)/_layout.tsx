@@ -43,6 +43,7 @@ const TabLayout = () => {
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="add-circle" size={size} color={COLORS.primary} />
           ),
+          tabBarHideOnKeyboard: true,
         }}
       />
       <Tabs.Screen
