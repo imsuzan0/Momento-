@@ -15,7 +15,10 @@ import {
   TextInput,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import * as FileSystem from "expo-file-system"
 import {Image} from "expo-image";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const create = () => {
   const router = useRouter();
@@ -34,7 +37,34 @@ const create = () => {
     });
     if (!result.canceled) setSelectedImage(result.assets[0].uri);
   };
-  console.log(selectedImage);
+  // console.log(selectedImage);
+
+
+  const generateUploadUrl=useMutation(api.posts.generateUploadUrl)
+  const createPost=useMutation(api.posts.createPost)
+
+  const handleShare=async()=>{
+    if(!selectedImage) return;
+    try {
+      setIsSharing(true);
+      const uploadUrl=await generateUploadUrl()
+      const uploadResult=await FileSystem.uploadAsync(uploadUrl,selectedImage,{
+        httpMethod:"POST",
+        uploadType:FileSystem.FileSystemUploadType.BINARY_CONTENT,
+        mimeType:"image/jpeg"
+      })
+      if(uploadResult.status!==200) throw new Error("Failed to upload image")
+      const {storageId}=JSON.parse(uploadResult.body)
+    await createPost({storageId,caption})
+
+    router.push("/(tabs)")
+
+    } catch (error) {
+      console.log("Error sharing post:",error)
+    }finally{
+      setIsSharing(false)
+    }
+  }
 
   if (!selectedImage) {
     return (
@@ -57,6 +87,7 @@ const create = () => {
       </View>
     );
   }
+
 
   return (
     <KeyboardAvoidingView
@@ -87,7 +118,7 @@ const create = () => {
               isSharing && styles.shareButtonDisabled,
             ]}
             disabled={isSharing || !selectedImage}
-            // onPress={handleShare}
+            onPress={handleShare}
           >
             {isSharing ? (
               <ActivityIndicator size="small" color={COLORS.primary} />
