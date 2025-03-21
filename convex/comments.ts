@@ -57,5 +57,6 @@ export const getComments = query({
         };
       })
     );
+    return commentInfo;
   },
 });
