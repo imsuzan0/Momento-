@@ -30,32 +30,34 @@ const index = () => {
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
+      {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Momento</Text>
+        <Text style={styles.headerTitle}>Momento-</Text>
         <TouchableOpacity onPress={() => signOut()}>
           <Ionicons name="log-out-outline" size={24} color={COLORS.white} />
         </TouchableOpacity>
       </View>
-
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/*Story Section */}
-
-        <FlatList
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={styles.storiesContainer}
-          data={STORIES} // Pass your STORIES array here
-          keyExtractor={(item) => item.id} // Extract a unique key for each item
-          renderItem={({ item }) => (
-            <Story key={item.id} story={item} /> // Render your Story component
-          )}
-        />
-
-        {posts.map((post) => (
-          <Post key={post._id} post={post} />
-        ))}
-      </ScrollView>
+  
+      {/* FlatList for posts with stories as header */}
+      <FlatList
+        data={posts}
+        keyExtractor={(item) => item._id}
+        renderItem={({ item }) => <Post post={item} />}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 60 }}
+        ListHeaderComponent={
+          <>
+            <FlatList
+              data={STORIES}
+              horizontal
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => <Story story={item} />}
+              showsHorizontalScrollIndicator={false}
+              style={styles.storiesContainer}
+            />
+          </>
+        }
+      />
     </View>
   );
 };
