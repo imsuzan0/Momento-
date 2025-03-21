@@ -57,6 +57,9 @@ const create = () => {
       const {storageId}=JSON.parse(uploadResult.body)
     await createPost({storageId,caption})
 
+    setSelectedImage(null)
+    setCaption("")
+
     router.push("/(tabs)")
 
     } catch (error) {
