@@ -47,7 +47,7 @@ const TabLayout = () => {
         }}
       />
       <Tabs.Screen
-        name="notification"
+        name="notifications"
         options={{
           tabBarIcon: ({ size, color }) => (
             <Ionicons name="notifications" size={size} color={color} />
