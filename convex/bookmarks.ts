@@ -11,7 +11,7 @@ export const toogleBookmark = mutation({
 
     const existing = await ctx.db
       .query("bookmarks")
-      .withIndex("by_user_and_post", (q) => q.eq("userId", currentUser._id))
+      .withIndex("by_user_and_post", (q) => q.eq("userId", currentUser._id).eq("postId", args.postId))
       .first();
 
     if (existing) {
