@@ -17,6 +17,10 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.surface,
   },
+  iconContainer: {
+    flexDirection: "row",
+    gap: 24, // Adds space between icons
+  },
   headerTitle: {
     fontSize: 24,
     fontFamily: "JetBrainsMono-Medium",
@@ -31,19 +35,6 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: 8,
     width: 72,
-  },
-  storyRing: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
-    padding: 2,
-    backgroundColor: COLORS.background,
-    borderWidth: 2,
-    borderColor: COLORS.primary,
-    marginBottom: 4,
-  },
-  noStory: {
-    borderColor: COLORS.grey,
   },
   storyAvatar: {
     width: 60,

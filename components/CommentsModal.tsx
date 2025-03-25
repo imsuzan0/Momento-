@@ -22,14 +22,12 @@ type CommentsModal = {
   postId: Id<"posts">;
   visible: boolean;
   onClose: () => void;
-  onCommentAdded: () => void;
 };
 
 
 
 const CommentsModal = ({
   onClose,
-  onCommentAdded,
   postId,
   visible,
 }: CommentsModal) => {
@@ -46,7 +44,6 @@ const CommentsModal = ({
         postId,
       })
       setNewComment("")
-      onCommentAdded()
     } catch (error) {
       console.log("Error adding comment:", error);
     }

@@ -51,8 +51,8 @@ const NotificationItem = ({ notication }: any) => {
   return (
     <View style={styles.notificationItem}>
       <View style={styles.notificationContent}>
-        {/* TODO:Fix it later */}
-        <Link href={`/notifications`} asChild>
+        
+        <Link href={`/user/${notication.sender._id}`} asChild>
           <TouchableOpacity style={styles.avatarContainer}>
             <Image
               source={notication.sender.image}
@@ -72,15 +72,13 @@ const NotificationItem = ({ notication }: any) => {
           </TouchableOpacity>
         </Link>
         <View style={styles.notificationInfo}>
-          {/* TODO:Fix it later */}
-
-          <Link href={"/notifications"} asChild>
+        <Link href={`/user/${notication.sender._id}`} asChild>
             <TouchableOpacity>
               <Text style={styles.username}>{notication.sender.username}</Text>
             </TouchableOpacity>
           </Link>
           <Text style={styles.action}>
-            {notication.type === "folloe"
+            {notication.type === "follow"
               ? "started following you"
               : notication.type === "like"
                 ? "liked your post"

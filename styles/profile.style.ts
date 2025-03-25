@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
   },
   gridItem: {
-    flex: 1 / 3,
+    flex: 1 /3,
     aspectRatio: 1,
     padding: 1,
   },
