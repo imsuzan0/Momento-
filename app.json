@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Momento-",
-    "slug": "social media app",
+    "slug": "social-media-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.suzan.momento"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fe3cad7f-ecd4-4b77-9d1d-6a958ad44e60"
+      }
     }
   }
 }
