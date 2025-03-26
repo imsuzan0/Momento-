@@ -209,4 +209,18 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  textInput:{
+    color: COLORS.white,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginRight: 12,
+    backgroundColor: COLORS.surface,
+    borderRadius: 20,
+    fontSize: 14,
+  },
+  searchUsername:{
+      color: COLORS.white,
+      fontWeight: "500",
+      marginBottom: 14,
+  }
 });
