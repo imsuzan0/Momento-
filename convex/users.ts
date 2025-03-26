@@ -1,5 +1,11 @@
 import { v } from "convex/values";
-import { mutation, MutationCtx, query, QueryCtx } from "./_generated/server";
+import {
+  DatabaseReader,
+  mutation,
+  MutationCtx,
+  query,
+  QueryCtx,
+} from "./_generated/server";
 import { Id } from "./_generated/dataModel";
 
 export const createUser = mutation({
@@ -72,20 +78,20 @@ export const getUserByClerkId = query({
   },
 });
 
-export const updateProfile=mutation({
-  args:{
-    fullname:v.string(),
-    bio:v.optional(v.string())
+export const updateProfile = mutation({
+  args: {
+    fullname: v.string(),
+    bio: v.optional(v.string()),
   },
-  handler:async (ctx,args)=>{
-    const currentUser=await getAunthenticatedUser(ctx)
+  handler: async (ctx, args) => {
+    const currentUser = await getAunthenticatedUser(ctx);
 
-    await ctx.db.patch(currentUser._id,{
-      fullname:args.fullname,
-      bio:args.bio,
-    })
-  }
-})
+    await ctx.db.patch(currentUser._id, {
+      fullname: args.fullname,
+      bio: args.bio,
+    });
+  },
+});
 
 export const getUserProfile = query({
   args: {
@@ -141,32 +147,47 @@ export const toogleFollow = mutation({
       await updateFollowCount(ctx, currentUser._id, args.followingId, true);
 
       //create a notification
-      await ctx.db.insert("notifications",{
+      await ctx.db.insert("notifications", {
         receiverId: args.followingId,
         senderId: currentUser._id,
         type: "follow",
-      })
+      });
     }
   },
 });
 
+export const searchUsers = query({
+  args: { searchText: v.string() },
+  handler: async ({ db }: { db: DatabaseReader }, { searchText }) => {
+    if (!searchText) return [];
+
+    const user = await db
+      .query("users")
+      .withSearchIndex("search_username", (q) =>
+        q.search("username", searchText)
+      )
+      .take(10);
+
+    return user;
+  },
+});
+
 async function updateFollowCount(
-  ctx:MutationCtx,
-  followerId:Id<"users">,
-  followingId:Id<"users">,
-  isFollow:boolean
+  ctx: MutationCtx,
+  followerId: Id<"users">,
+  followingId: Id<"users">,
+  isFollow: boolean
 ) {
-    const follower=await ctx.db.get(followerId)
-    const following=await ctx.db.get(followingId)
+  const follower = await ctx.db.get(followerId);
+  const following = await ctx.db.get(followingId);
 
-    if(follower && following){
-      await ctx.db.patch(followerId,{
-        following:follower.following+(isFollow?1:-1)
-      })
+  if (follower && following) {
+    await ctx.db.patch(followerId, {
+      following: follower.following + (isFollow ? 1 : -1),
+    });
 
-      await ctx.db.patch(followingId,{
-        followers:following.followers+(isFollow?1:-1)
-      })
-    }
+    await ctx.db.patch(followingId, {
+      followers: following.followers + (isFollow ? 1 : -1),
+    });
+  }
 }
-
