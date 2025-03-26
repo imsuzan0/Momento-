@@ -17,14 +17,23 @@ import { api } from "@/convex/_generated/api";
 import Loader from "@/components/Loader";
 import NoPostsFound from "@/components/NoPostsFound";
 import Post from "@/components/Post";
+import { Image } from "expo-image";
+import NoUsersFound from "@/components/NoUsersFound";
+import { Link } from "expo-router";
 
 const index = () => {
   const { signOut } = useAuth();
   const [refreshing, setRefreshing] = useState(false);
+  const [modalVisible,setModalVisible]=useState(false)
+  const [searchText,setSearchText]=useState("")
 
 
   const posts = useQuery(api.posts.getFeedPosts);
-
+  const users = useQuery(
+    api.users.searchUsers,
+    searchText.trim() ? { searchText } : "skip"
+  );
+  
   if (posts === undefined) return <Loader />;
 
   if (posts.length === 0) return <NoPostsFound />;
@@ -42,7 +51,7 @@ const index = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Momento-</Text>
         <View style={styles.iconContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>setModalVisible(true)}>
             <Ionicons name="search-outline" size={24} color={COLORS.white} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => signOut()}>
@@ -65,6 +74,51 @@ const index = () => {
           />
         }
       />
+
+      {/* Search Modal  */}
+      <Modal visible={modalVisible} animationType="slide" transparent>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Search Users</Text>
+            <TouchableOpacity onPress={() => setModalVisible(false)}>
+              <Ionicons name="close-outline" size={24} color={COLORS.white} />
+            </TouchableOpacity>
+          </View>
+
+          <TextInput
+            style={styles.textInput}
+            placeholder="Search username..."
+            placeholderTextColor={COLORS.grey}
+            value={searchText}
+            onChangeText={setSearchText}
+          />
+
+          {users && users.length > 0 ? (
+            <FlatList
+              data={users}
+              keyExtractor={(item) => item._id}
+              renderItem={({ item }) => (
+                <Link 
+                href={`/user/${item._id}`} asChild
+                >
+                <TouchableOpacity style={styles.commentContainer}>
+                  <Image
+                  source={item.image}
+                  style={styles.postAvatar}
+                  contentFit="cover"
+                  transition={200}
+                  cachePolicy="memory-disk"
+                  />
+                  <Text style={styles.searchUsername}>{item.username}</Text>
+                </TouchableOpacity>
+                </Link>
+              )}
+            />
+          ) : (
+            <NoUsersFound/>
+          )}
+        </View>
+      </Modal>
     </View>
   );
 };
