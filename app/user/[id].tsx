@@ -96,7 +96,7 @@ const UserProfileScreen = () => {
                         style={styles.gridItem}
                         >
                             <Image
-                            style={{width:"100%",aspectRatio:1,flex:1/3,padding:1}}
+                            style={{width:"100%",aspectRatio:1,flex:1,padding:1}}
                             source={item.imageUrl}
                             contentFit='cover'
                             cachePolicy="memory-disk"
