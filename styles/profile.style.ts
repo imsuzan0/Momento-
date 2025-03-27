@@ -236,6 +236,6 @@ export const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 18,
     fontWeight: "600",
-    color: COLORS.white,
+    color: COLORS.white
   },
 });

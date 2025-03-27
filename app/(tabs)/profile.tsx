@@ -18,7 +18,7 @@ import { useMutation, useQuery } from "convex/react";
 import { Doc } from "@/convex/_generated/dataModel";
 import Loader from "@/components/Loader";
 import { styles } from "@/styles/profile.style";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
 import { Image } from "expo-image";
 
@@ -58,6 +58,10 @@ const Profile = () => {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <Text style={styles.username}>{currentUser.username}</Text>
+          {
+            currentUser.username==="timalsinasujan22" &&
+            <MaterialIcons  name="verified" size={16} color="#3B5CF6"/>
+          }
         </View>
         <View style={styles.headerRight}>
           <TouchableOpacity style={styles.headerIcon} onPress={() => signOut()}>

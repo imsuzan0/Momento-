@@ -4,7 +4,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import Loader from "@/components/Loader";
 import { styles } from "@/styles/notification.style";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
 import { Link } from "expo-router";
 import { Image } from "expo-image";
@@ -47,7 +47,7 @@ const NoNotificationsFound = () => {
   );
 };
 
-const NotificationItem = ({ notication }: any) => {
+const NotificationItem = ({ notication }) => {
   return (
     <View style={styles.notificationItem}>
       <View style={styles.notificationContent}>
@@ -74,7 +74,12 @@ const NotificationItem = ({ notication }: any) => {
         <View style={styles.notificationInfo}>
         <Link href={`/user/${notication.sender._id}`} asChild>
             <TouchableOpacity>
+            <View style={styles.usernameContainer}>
               <Text style={styles.username}>{notication.sender.username}</Text>
+          {notication.sender.username === "timalsinasujan22" && (
+            <MaterialIcons name="verified" size={16} color="#3B5CF6" />
+          )}
+            </View>
             </TouchableOpacity>
           </Link>
           <Text style={styles.action}>

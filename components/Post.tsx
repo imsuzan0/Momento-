@@ -4,7 +4,7 @@ import { Link } from "expo-router";
 import { Image } from "expo-image";
 import { Id } from "@/convex/_generated/dataModel";
 import { useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "@/constants/theme";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -92,6 +92,10 @@ const Post = ({ post }: PostProps) => {
               cache-policy="memory-disk"
             />
             <Text style={styles.postUsername}>{post.author.username}</Text>
+            {
+              post.author.username==="timalsinasujan22" &&
+              <MaterialIcons name="verified" size={16} color="#3B5CF6"/>
+            }
           </TouchableOpacity>
         </Link>
 

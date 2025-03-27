@@ -83,4 +83,8 @@ export const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  usernameContainer: {
+    flexDirection: "row",  
+    alignItems: "center",  
+  },
 });
