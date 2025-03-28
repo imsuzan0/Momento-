@@ -39,6 +39,13 @@
       "typedRoutes": true
     },
     "extra": {
+      "EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY":"pk_test_ZG9taW5hbnQtbWFybGluLTQxLmNsZXJrLmFjY291bnRzLmRldiQ",
+
+"CONVEX_DEPLOYMENT":"dev:oceanic-mandrill-124",
+
+"EXPO_PUBLIC_CONVEX_URL":"https://oceanic-mandrill-124.convex.cloud",
+
+"CLERK_WEBHOOK_SECRET":"whsec_F0WJOHbWNuQbQvVuX8WQ5RCk/uPkLTLL",
       "router": {
         "origin": false
       },
